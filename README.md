@@ -514,9 +514,9 @@ kubectl config set-context --current --namespace=petclinic-app
 
 ```bash
 kubectl create secret generic mysql-credentials \
-  --from-literal=mysql-root-password=OtraPasswordSegura456! \
+  --from-literal=mysql-root-password=00Superseguroylimpio!! \
   --from-literal=mysql-user=petclinic \
-  --from-literal=mysql-password=TuPasswordSegura123! \
+  --from-literal=mysql-password=0GrifindorMejorQueSlytherin0? \
   --from-literal=mysql-database=petclinic \
   -n petclinic-app
 ```
