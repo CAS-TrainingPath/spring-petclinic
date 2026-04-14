@@ -1,4 +1,3 @@
-# Abre agro con kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -21,3 +20,14 @@ spec:
       selfHeal: true             # revierte cambios manuales en el clúster
     syncOptions:
       - CreateNamespace=true     # crea petclinic-app si no existe
+
+
+
+
+
+# Abre agro con kubectl port-forward svc/argocd-server -n argocd 8080:443
+# Instalamos Sealed secrets con: kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
+# Kubeseal para los cifrados curl -L -o kubeseal.tar.gz \
+# https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.36.6/kubeseal-0.36.6-linux-amd64.tar.gz
+
+# tar -xzf kubeseal.tar.gz \ sudo install -m 755 kubeseal /usr/local/bin/kubeseal

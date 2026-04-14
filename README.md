@@ -529,7 +529,7 @@ kubectl label namespace petclinic-app \
   pod-security.kubernetes.io/warn=restricted
 ```
 
-### Paso 4 — Aplicar los manifiestos en orden
+### Paso 4 — Aplicar los YAML en orden
 
 El orden importa: el PVC y el Service de MySQL deben existir antes de que el pod de MySQL arranque, y MySQL debe estar listo antes de que PetClinic intente conectarse.
 
