@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: petclinic
+  namespace: argocd              # namespace donde está instalado ArgoCD
+spec:
+  destination:
+    namespace: petclinic-app     # namespace donde se despliega la app
+    server: https://kubernetes.default.svc  # el propio clúster local
+  source:
+    repoURL: https://github.com/CAS-TrainingPath/spring-petclinic.git  # tu repositorio
+    targetRevision: HEAD         # rama a seguir
+    path: k8s                    # carpeta dentro del repo con los YAMLs
+  project: default               
+                                 # salvo que hayas creado un AppProject propio
+  syncPolicy:
+    automated:
+      prune: true                # elimina recursos que ya no están en Git
+      selfHeal: true             # revierte cambios manuales en el clúster
+    syncOptions:
+      - CreateNamespace=true     # crea petclinic-app si no existe
