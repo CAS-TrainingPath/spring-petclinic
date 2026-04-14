@@ -1,0 +1,48 @@
+services:
+  petclinic:
+    image: petclinic:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/petclinic
+      - SPRING_DATASOURCE_USERNAME=petclinic
+      - SPRING_DATASOURCE_PASSWORD=petclinic
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - frontend
+      - backend
+
+  mysql:
+    image: mysql:9.6
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
+    volumes:
+      - "./conf.d:/etc/mysql/conf.d:ro"
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "petclinic", "-ppetclinic"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
+
+volumes:
+  mysql_data:

@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mysql-allow-only-petclinic
+  namespace: petclinic-app
+spec:
+  podSelector:
+    matchLabels:
+      app: mysql
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: petclinic
+      ports:
+        - protocol: TCP
+          port: 3306
+  egress: []
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: petclinic-network-policy
+  namespace: petclinic-app
+spec:
+  podSelector:
+    matchLabels:
+      app: petclinic
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 8080
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: mysql
+      ports:
+        - protocol: TCP
+          port: 3306
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
